@@ -15,7 +15,7 @@ create table links(
     title VARCHAR(255) NOT NULL,
     url VARCHAR(255) NOT NULL,
     description TEXT,
-    user_id INT UNSIGNED,
+    user_id INT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
