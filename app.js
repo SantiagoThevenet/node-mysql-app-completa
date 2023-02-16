@@ -7,7 +7,9 @@ const { engine } = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require("express-session")
 const symsql = require("express-mysql-session")
+const passport = require("passport")
 const { database } = require("./keys")
+
 
 
 const indexRouter = require('./routes/index');
@@ -16,6 +18,7 @@ const authenticationRouter = require('./routes/authentication');
 
 const app = express();
 
+require('./lib/passport')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
@@ -41,7 +44,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(flash())
-
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Globbal variables
 app.use((req, res, next) => {
@@ -52,7 +56,7 @@ app.use((req, res, next) => {
 // Routes 
 app.use('/', indexRouter);
 app.use('/links', linksRouter);
-app.use('/authentication', authenticationRouter);
+app.use('/', authenticationRouter);
 
 
 
